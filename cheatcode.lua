@@ -12,10 +12,10 @@ function Cheatcode:__call(codes_map)
   the_map = {}
 
   for key, callback in pairs(codes_map) do
-    local last_table = the_map
+    local last_map = the_map
 
     -- This is a while loop so we can screw with i
-    local i = 0 while true do i = i+1
+    local i=0 while true do i=i+1
       local char = key:sub(i,i)
 
       -- {up} sets char='up' and increments i to skip over these chars next time
@@ -31,13 +31,13 @@ function Cheatcode:__call(codes_map)
 
       -- This is the last char in our code
       if i>=#key then
-        last_table[char] = callback
+        last_map[char] = callback
         break
       end
 
       -- Go deeper
-      if last_table[char]==nil then last_table[char] = {} end
-      last_table = last_table[char]
+      if last_map[char]==nil then last_map[char] = {} end
+      last_map = last_map[char]
     end
   end
 
@@ -50,11 +50,11 @@ function Cheatcode.handle(char)
   if char=='space' then char = ' ' end
 
   -- What's next?
-  local next_table = current_map[char]
+  local next_map = current_map[char]
 
   -- If its empty, reset to the_map
   -- If we were trying deeper than the_map, resend their input
-  if next_table==nil then
+  if next_map==nil then
     local should_retry = current_map~=the_map
     current_map = the_map
     if should_retry then Cheatcode.handle(char) end
@@ -62,14 +62,14 @@ function Cheatcode.handle(char)
   end
 
   -- We found a function! execute it and reset to the_map
-  if type(next_table)=='function' then
-    next_table()
+  if type(next_map)=='function' then
+    next_map()
     current_map = the_map
     return
   end
 
-  -- Goto next table
-  current_map = next_table
+  -- Goto next_map
+  current_map = next_map
 end
 
 return setmetatable(Cheatcode, Cheatcode)
