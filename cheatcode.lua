@@ -1,6 +1,6 @@
 -- the_map is some confusing structure for optimized performance.
--- If your codes are {apple=a, abc=b}
--- the_map will look like {a={p={p={l={e=a}}}, b={c=b}}}
+-- If your codes are {apple=func1, abc=func2}
+-- the_map will look like {a={p={p={l={e=func1}}}, b={c=func2}}}
 local the_map
 local current_map
 
