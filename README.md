@@ -11,7 +11,7 @@ codes['{up}{up}{down}{down}{left}{right}{left}{right}ba{return}'] = function() l
 codes.bighead = function() bighead = not bighead end
 Cheatcode(codes)
 
-function love.keyreleased(key)
+function love.keypressed(key)
   Cheatcode.handle(key)
 end
 ```
